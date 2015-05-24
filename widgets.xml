@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets>
+
+    <widget>
+        <title>Голосование</title>
+        <description>Блок голосования</description>
+        <method>polls_block_show</method>
+    </widget>
+
+</widgets>
