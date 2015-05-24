@@ -190,6 +190,7 @@ class Polls extends MY_Controller {
         CREATE TABLE  `cms_polls` (
         `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
         `name` VARCHAR( 255 ) NOT NULL ,
+        `lang` INT( 11) NOT NULL ,
         PRIMARY KEY (  `id` )
         ) ENGINE = MYISAM ;');
 
