@@ -11,7 +11,7 @@
         </div>
     </div> 
 
-    {if $polls->num_rows()==0}
+    {if count($polls)==0}
     <div id="notice" style="width:500px;">Список голосований пустой.
     <a href="/admin/components/cp/polls/create" class="pjax">Создать.</a>
     </div>
@@ -36,11 +36,18 @@
 				<th width="24px;"></th>
 			</thead>
 			<tbody>
-		{foreach $polls->result_array() as $poll}
+		{foreach $polls as $poll}
+			 
 		<tr>
-            <td>{$poll.id}</td>
+            <td>{$poll.poll.id}</td>
             <td>
-                <a href="/admin/components/cp/polls/edit/{$poll.id}" class="pjax">{encode($poll.name)}</a>
+                <a href="/admin/components/cp/polls/edit/{$poll.id}" class="pjax">{encode($poll.poll.name)}</a>
+				<br><small>
+				{foreach $poll.answers as $answer}
+					{$answer.text} ({$answer.totalVotes})
+					<br>
+				{/foreach}
+				</small>
             </td>
             <td>
 			<img onclick="confirm_delete_poll({$poll.id});" src="{$THEME}/images/delete.png"  style="cursor:pointer" width="16" height="16" title="Удалить" />

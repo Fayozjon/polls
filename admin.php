@@ -12,14 +12,73 @@ class Admin extends MY_Controller {
 	{
 		parent::__construct(); 
 	}
+ public function getPoll($pollId=null)
+    {
+        // Load poll
+        $this->db->limit(1); 
+		if (!$pollId){
+		$this->db->order_by('id','random');
+		}else{
+        $this->db->where('id', $pollId);
+		}
+		$this->db->limit(1);
+        $poll = $this->db->get('cms_polls');
+        if ($poll->num_rows() == 0)
+            return false;
+        else
+            $poll = $poll->row_array();
 
+        $this->poll = $poll;
+
+        // Load answers
+        $this->db->where('poll_id',$poll['id']);
+        $this->db->order_by('position','ASC');
+        $answers = $this->db->get('cms_polls_answers');
+
+        if (sizeof($answers) == 0)
+            return false;
+        else
+            $answers = $answers->result_array();
+
+        // Calculate percent of votes for each answer
+        $totalVotes=0;
+        for($i=0;$i<count($answers);$i++)
+        {
+            $this->db->where('answer_id',$answers[$i]['id']);
+            $this->db->where('poll_id',(int)$poll['id']);
+            $this->db->from('cms_polls_voters');
+            $answers[$i]['totalVotes']=$this->db->count_all_results();
+            $totalVotes = $totalVotes+$answers[$i]['totalVotes'];
+        }
+
+        for($i=0;$i<count($answers);$i++)
+        {
+            $answers[$i]['percent'] = @round($answers[$i]['totalVotes'] / $totalVotes * 100);
+        }
+
+        return array(
+            'totalVotes'=>$totalVotes,
+            'poll'=>$poll,
+            'answers'=>$answers 
+        );
+    }
+	
 
 	public function index()
 	{
-	    $polls = $this->db->get('cms_polls');
-
-        $this->template->assign('polls',$polls);
+	    $polls = $this->db->get('cms_polls')->result_array();
 		
+		if(count($polls)>0){
+		
+		foreach($polls as $plz){
+			$tmp_pollz[] = $this->getPoll($plz[id]);
+		}
+       
+		$this->template->assign('polls',$tmp_pollz);
+		}else{
+        $this->template->assign('polls',array());
+			
+		}
 		 
         $this->display_tpl('list');
 	}
@@ -219,7 +278,12 @@ class Admin extends MY_Controller {
 		return $this->template->fetch('file:'.$file);
 	}
 
+
+ 
+	
+	
 }
 
 
 /* End of file admin.php */
+
