@@ -41,7 +41,7 @@
 		<tr>
             <td>{$poll.poll.id}</td>
             <td>
-                <a href="/admin/components/cp/polls/edit/{$poll.id}" class="pjax">{encode($poll.poll.name)}</a>
+                <a href="/admin/components/cp/polls/edit/{$poll.poll.id}" class="pjax">{encode($poll.poll.name)}</a>
 				<br><small>
 				{foreach $poll.answers as $answer}
 					{$answer.text} ({$answer.totalVotes})
@@ -50,7 +50,7 @@
 				</small>
             </td>
             <td>
-			<img onclick="confirm_delete_poll({$poll.id});" src="{$THEME}/images/delete.png"  style="cursor:pointer" width="16" height="16" title="Удалить" />
+			<img onclick="confirm_delete_poll({$poll.poll.id});" src="{$THEME}/images/delete.png"  style="cursor:pointer" width="16" height="16" title="Удалить" />
 			</td>
 		</tr>
 		{/foreach}
