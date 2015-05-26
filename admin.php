@@ -256,7 +256,7 @@ class Admin extends MY_Controller {
             'poll_id' => $poll_id,
         ));
 
-        redirect('page', site_url('admin/components/cp/polls/index'));
+        redirect(site_url('admin/components/cp/polls/index'));
     }
 
     /**
