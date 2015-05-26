@@ -8,7 +8,7 @@ $com_info = array(
     'w'           => 600,                 // Window width
 	'h'           => 550,                 // Window height
 	'version'     => '1.0',               // Module version
-	'author'      => 'dev@imagecms.net' // Author info
+	'author'      => 'i@fb.uz' // Author info
 );
 
 /* End of file module_info.php */

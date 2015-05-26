@@ -69,7 +69,7 @@
 {literal}
     	<script type="text/javascript">
 		  
-        function confirm_delete_poll(id)
+        confirm_delete_poll = function(id)
         {
           
              
@@ -91,7 +91,8 @@
 						}
 					  });
 						 
-        }  
+        }
+		}		
 		</script>
 {/literal}
 
